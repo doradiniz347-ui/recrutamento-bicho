@@ -1,1 +1,180 @@
 
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recrutamento - Bicho de Estimação</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --sage-green: #6b8e7f;
+            --blue-gray: #5a6d7a;
+            --cream: #f5f3f0;
+            --dark: #2c2c2c;
+            --error: #c85a54;
+            --success: #28a745;
+        }
+        body { font-family: Arial, sans-serif; background-color: var(--cream); color: var(--dark); line-height: 1.6; }
+        header { background: linear-gradient(135deg, var(--sage-green) 0%, var(--blue-gray) 100%); color: white; padding: 3rem 2rem; text-align: center; }
+        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        header p { font-size: 1.1rem; opacity: 0.95; }
+        .hero { background: white; padding: 2rem; text-align: center; border-bottom: 1px solid #eee; }
+        .hero h2 { font-size: 1.8rem; color: var(--sage-green); margin-bottom: 1rem; }
+        .hero p { color: #666; max-width: 600px; margin: 0 auto; }
+        nav { background: white; padding: 1rem 2rem; display: flex; justify-content: center; gap: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; flex-wrap: wrap; }
+        nav button { background: none; border: none; cursor: pointer; font-size: 1rem; font-weight: 500; color: var(--blue-gray); padding: 0.5rem 1rem; transition: all 0.3s; position: relative; }
+        nav button.active { color: var(--sage-green); }
+        nav button.active::after { content: ''; position: absolute; bottom: -8px; left: 0; right: 0; height: 3px; background: var(--sage-green); }
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+        .section { display: none; animation: fadeIn 0.4s ease; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .form-section { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+        .form-section h2 { font-size: 1.8rem; color: var(--sage-green); margin-bottom: 0.5rem; }
+        .section-title { font-size: 1.1rem; color: var(--sage-green); margin: 2rem 0 1rem; font-weight: 600; padding-bottom: 0.5rem; border-bottom: 2px solid #9ab5a8; }
+        .form-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .required::after { content: ' *'; color: var(--error); }
+        input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select, textarea { width: 100%; padding: 0.85rem; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; font-size: 0.95rem; transition: all 0.3s; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--sage-green); box-shadow: 0 0 0 3px rgba(107,142,127,0.1); }
+        textarea { resize: vertical; min-height: 100px; }
+        .file-upload-box { border: 2px dashed var(--sage-green); border-radius: 8px; padding: 2rem; text-align: center; cursor: pointer; background: #f9f7f5; transition: all 0.3s; }
+        .file-upload-box:hover { background: #f0ebe8; }
+        .file-upload-box input[type="file"] { display: none; }
+        .file-preview { margin-top: 1rem; padding: 1rem; background: #d4edda; border-left: 4px solid var(--success); border-radius: 4px; display: none; }
+        .file-preview.show { display: block; }
+        .radio-group, .checkbox-group { display: flex; flex-direction: column; gap: 0.8rem; }
+        .radio-item, .checkbox-item { display: flex; align-items: center; gap: 0.8rem; }
+        input[type="radio"], input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--sage-green); cursor: pointer; }
+        .radio-item label, .checkbox-item label { margin: 0; font-weight: 400; cursor: pointer; }
+        .disc-box { background: #f9f7f5; padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--sage-green); margin-bottom: 1.5rem; }
+        .disc-link { display: inline-block; background: var(--sage-green); color: white; padding: 0.8rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 500; transition: all 0.3s; margin-bottom: 1rem; }
+        .disc-link:hover { background: var(--blue-gray); }
+        .message { padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: none; }
+        .message.show { display: block; }
+        .message.success { background: #d4edda; color: #155724; border-left: 4px solid var(--success); }
+        .message.error { background: #f8d7da; color: #721c24; border-left: 4px solid var(--error); }
+        .btn { background: var(--sage-green); color: white; padding: 1rem 2rem; border: none; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; width: 100%; }
+        .btn:hover { background: var(--blue-gray); transform: translateY(-2px); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .stat-card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 4px solid var(--sage-green); text-align: center; }
+        .stat-card h3 { font-size: 2.5rem; color: var(--sage-green); margin-bottom: 0.5rem; }
+        .stat-card p { color: #666; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .candidates-section { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .candidates-section h2 { font-size: 1.5rem; color: var(--sage-green); margin-bottom: 1.5rem; }
+        .filters { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .filters input, .filters select { flex: 1; min-width: 200px; }
+        .candidate-item { padding: 1.5rem; border-bottom: 1px solid #eee; }
+        .candidate-item:hover { background: #fafafa; }
+        .candidate-name { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .badge { display: inline-block; padding: 0.3rem 0.7rem; border-radius: 4px; font-size: 0.8rem; font-weight: 500; background: #e8f4f8; color: var(--blue-gray); margin-right: 0.5rem; }
+        .candidate-contact { display: flex; gap: 1.5rem; margin: 0.5rem 0; font-size: 0.9rem; flex-wrap: wrap; }
+        .candidate-contact a { color: var(--sage-green); text-decoration: none; }
+        .candidate-actions { display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem; flex-wrap: wrap; }
+        .btn-small { background: none; border: 1px solid #ddd; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; color: var(--blue-gray); font-size: 0.85rem; transition: all 0.2s; }
+        .btn-small:hover { background: var(--sage-green); color: white; border-color: var(--sage-green); }
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .modal.show { display: flex; }
+        .modal-content { background: white; padding: 2rem; border-radius: 8px; max-width: 700px; width: 90%; margin: auto; max-height: 90vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
+        .modal-header h2 { font-size: 1.4rem; color: var(--sage-green); }
+        .close-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #999; }
+        .empty-state { text-align: center; padding: 3rem; color: #999; }
+        footer { background: var(--blue-gray); color: white; text-align: center; padding: 2rem; margin-top: 3rem; font-size: 0.9rem; }
+        .loading { display: inline-block; width: 12px; height: 12px; border: 2px solid #f3f3f3; border-top: 2px solid white; border-radius: 50%; animation: spin 1s linear infinite; margin-right: 0.5rem; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @media (max-width: 768px) { header h1 { font-size: 1.8rem; } .form-section { padding: 1.5rem; } nav { gap: 1rem; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🐾 Bicho de Estimação</h1>
+        <p>Recrutamento de Equipe — Junte-se a Nós!</p>
+    </header>
+    <div class="hero">
+        <h2>Transforme Sua Carreira com a Gente</h2>
+        <p>Procuramos pessoas dedicadas, atenciosas e focadas que amam animais. Se você se identifica, você é o nosso candidato perfeito!</p>
+    </div>
+    <nav>
+        <button class="nav-btn active" data-section="candidatar">Candidatar-se</button>
+        <button class="nav-btn" data-section="admin">Painel Admin</button>
+    </nav>
+    <div class="container">
+        <!-- CANDIDATAR-SE -->
+        <div id="candidatar" class="section active">
+            <div class="form-section">
+                <h2>Preencha Sua Candidatura</h2>
+                <p style="color:#666;margin-bottom:2rem">Todos os campos com * são obrigatórios</p>
+                <div class="message success" id="successMessage"></div>
+                <div class="message error" id="errorMessage"></div>
+                <form id="candidateForm">
+                    <h3 class="section-title">📋 Dados Básicos</h3>
+                    <div class="form-group">
+                        <label for="fullName" class="required">Nome Completo</label>
+                        <input type="text" id="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="required">E-mail</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="required">Telefone (WhatsApp)</label>
+                        <input type="tel" id="phone" placeholder="(XX) 9XXXX-XXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age" class="required">Idade</label>
+                        <input type="number" id="age" min="18" required>
+                    </div>
+
+```
+                <h3 class="section-title">📄 Seu Currículo</h3>
+                <div class="form-group">
+                    <label class="required">Envie Seu Currículo</label>
+                    <div class="file-upload-box" onclick="document.getElementById('resume').click()">
+                        <div style="font-size:2rem;margin-bottom:0.5rem">📎</div>
+                        <p><strong>Clique para selecionar seu currículo</strong></p>
+                        <small>PDF, Word ou Imagem — Máximo 10MB</small>
+                    </div>
+                    <input type="file" id="resume" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
+                    <div class="file-preview" id="resumePreview"></div>
+                </div>
+
+                <h3 class="section-title">💼 Informações Profissionais</h3>
+                <div class="form-group">
+                    <label for="position" class="required">Vaga de Interesse</label>
+                    <select id="position" required>
+                        <option value="">Selecione uma vaga...</option>
+                        <option>Vendedor</option>
+                        <option>Auxiliar Administrativo</option>
+                        <option>Atendente</option>
+                        <option>Gerente</option>
+                        <option>Outro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="required">Tempo de Experiência</label>
+                    <div class="radio-group">
+                        <div class="radio-item"><input type="radio" name="experience" value="Nenhuma" required><label>Nenhuma experiência</label></div>
+                        <div class="radio-item"><input type="radio" name="experience" value="Menos de 1 ano"><label>Menos de 1 ano</label></div>
+                        <div class="radio-item"><input type="radio" name="experience" value="1-2 anos"><label>Entre 1 e 2 anos</label></div>
+                        <div class="radio-item"><input type="radio" name="experience" value="Acima de 2 anos"><label>Acima de 2 anos</label></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="required">Disponibilidade de Horário</label>
+                    <div class="radio-group">
+                        <div class="radio-item"><input type="radio" name="availability" value="Matutino" required><label>Matutino</label></div>
+                        <div class="radio-item"><input type="radio" name="availability" value="Vespertino"><label>Vespertino</label></div>
+                        <div class="radio-item"><input type="radio" name="availability" value="Integral"><label>Integral</label></div>
+                    </div>
+                </div>
+
+                <h3 class="section-title">🎯 Teste de Perfil Comportamental</h3>
+                <div class="disc-box">
+                    <h4>Teste DISC</h4>
+                    <p style="margin-bottom:1rem;font-size:0.9rem;color:#666">Faça o teste DISC e cole o resultado abaixo. Leva cerca de 5-10 minutos e é gratuito.</p>
+                    <a href="https://www.mrcoach.com.br/perfil-comportamental-disc.php" target="_blank" class="disc-link">🎯 Fazer Teste DISC Agora</a>
+```
