@@ -1,660 +1,953 @@
-
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Recrutamento - Bicho de Estimação</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --green:#6b8e7f;
-  --blue:#5a6d7a;
-  --cream:#f5f3f0;
-  --dark:#2c2c2c;
-  --red:#c85a54;
-  --ok:#2e7d52;
-  --light:#e8f0ec;
-}
-body{font-family:Arial,sans-serif;background:var(--cream);color:var(--dark);font-size:16px}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recrutamento — Bicho de Estimação</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* HEADER */
-header{background:linear-gradient(135deg,var(–green),var(–blue));color:#fff;padding:2.5rem 1.5rem;text-align:center}
-header h1{font-size:2rem;margin-bottom:.4rem}
-header p{opacity:.9;font-size:1rem}
+    :root {
+      --blue-50:  #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-200: #bfdbfe;
+      --blue-300: #93c5fd;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --blue-800: #1e40af;
+      --blue-900: #1e3a8a;
+      --white:    #ffffff;
+      --gray-50:  #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+      --green-50: #f0fdf4;
+      --green-500:#22c55e;
+      --green-700:#15803d;
+      --red-500:  #ef4444;
+      --red-50:   #fef2f2;
+      --shadow:   0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.05);
+      --shadow-md:0 4px 24px rgba(37,99,235,.12);
+      --radius:   12px;
+      --radius-sm:8px;
+    }
 
-/* HERO */
-.hero{background:#fff;padding:1.5rem;text-align:center;border-bottom:1px solid #ddd}
-.hero h2{color:var(–green);font-size:1.4rem;margin-bottom:.5rem}
-.hero p{color:#666;font-size:.95rem;max-width:560px;margin:0 auto}
+    html { scroll-behavior: smooth; }
 
-/* NAV */
-nav{background:#fff;display:flex;justify-content:center;gap:1rem;padding:.8rem 1rem;box-shadow:0 2px 6px rgba(0,0,0,.08);position:sticky;top:0;z-index:100}
-nav button{background:none;border:none;cursor:pointer;font-size:.95rem;font-weight:600;color:#888;padding:.5rem 1.2rem;border-radius:20px;transition:.2s}
-nav button.active{background:var(–green);color:#fff}
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-800);
+      min-height: 100vh;
+    }
 
-/* CONTAINER */
-.container{max-width:860px;margin:0 auto;padding:1.5rem}
-.section{display:none}
-.section.active{display:block}
+    /* ── HEADER ── */
+    .site-header {
+      background: var(--white);
+      border-bottom: 1px solid var(--blue-100);
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 1px 8px rgba(37,99,235,.08);
+    }
+    .header-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .logo {
+      display: flex; align-items: center; gap: .75rem;
+      text-decoration: none;
+    }
+    .logo-mark {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--blue-600), var(--blue-800));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem; color: var(--white);
+      box-shadow: 0 2px 8px rgba(37,99,235,.3);
+    }
+    .logo-text { font-size: .95rem; font-weight: 600; color: var(--blue-800); line-height: 1.2; }
+    .logo-sub  { font-size: .72rem; font-weight: 400; color: var(--gray-500); display: block; }
+    .nav-tabs  { display: flex; gap: .25rem; }
+    .nav-btn {
+      padding: .45rem 1.1rem; border-radius: 8px; border: none;
+      font-family: 'DM Sans', sans-serif; font-size: .85rem; font-weight: 500;
+      cursor: pointer; transition: all .18s ease;
+      background: transparent; color: var(--gray-600);
+    }
+    .nav-btn:hover  { background: var(--blue-50); color: var(--blue-700); }
+    .nav-btn.active { background: var(--blue-600); color: var(--white); }
+    .nav-btn.outline{
+      border: 1.5px solid var(--blue-200); color: var(--blue-700); background: var(--white);
+    }
+    .nav-btn.outline:hover { background: var(--blue-50); }
 
-/* CARD */
-.card{background:#fff;border-radius:12px;padding:1.8rem;box-shadow:0 2px 10px rgba(0,0,0,.07);margin-bottom:1.5rem}
-.card h2{color:var(–green);font-size:1.5rem;margin-bottom:.3rem}
-.card .sub{color:#888;font-size:.9rem;margin-bottom:1.5rem}
+    /* ── SECTIONS ── */
+    .section { display: none; }
+    .section.active { display: block; }
 
-/* SECTION TITLE */
-.stitle{font-size:1rem;font-weight:700;color:var(–green);margin:1.8rem 0 1rem;padding-bottom:.4rem;border-bottom:2px solid var(–light);display:flex;align-items:center;gap:.5rem}
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--blue-800) 0%, var(--blue-600) 60%, var(--blue-500) 100%);
+      color: var(--white);
+      padding: 5rem 1.5rem 4rem;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-emoji { font-size: 3rem; margin-bottom: 1rem; display: block; position: relative; }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 400; line-height: 1.15;
+      margin-bottom: .75rem; position: relative;
+    }
+    .hero p {
+      font-size: 1.1rem; font-weight: 300;
+      color: var(--blue-100); max-width: 520px;
+      margin: 0 auto 2rem; position: relative;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .9rem 2rem; border-radius: 50px;
+      background: var(--white); color: var(--blue-700);
+      font-weight: 600; font-size: 1rem;
+      border: none; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0,0,0,.15);
+      transition: all .2s ease; position: relative;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,.2); }
 
-/* FORM */
-.form-group{margin-bottom:1.2rem}
-label{display:block;margin-bottom:.4rem;font-weight:600;font-size:.9rem;color:var(–dark)}
-.req::after{content:” *”;color:var(–red)}
-input[type=text],input[type=email],input[type=tel],input[type=number],select,textarea{
-width:100%;padding:.8rem;border:1.5px solid #ddd;border-radius:8px;
-font-size:.95rem;font-family:inherit;transition:.2s;background:#fafafa
-}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(–green);background:#fff;box-shadow:0 0 0 3px rgba(107,142,127,.12)}
-textarea{resize:vertical;min-height:90px}
+    /* ── CARDS VAGAS ── */
+    .section-wrap { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem; color: var(--blue-800);
+      margin-bottom: 1.5rem;
+    }
+    .vagas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+    .vaga-card {
+      background: var(--white); border-radius: var(--radius);
+      border: 1px solid var(--blue-100);
+      padding: 1.5rem; cursor: pointer;
+      transition: all .2s ease; box-shadow: var(--shadow);
+    }
+    .vaga-card:hover {
+      border-color: var(--blue-300);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .vaga-icon { font-size: 1.8rem; margin-bottom: .75rem; }
+    .vaga-title { font-weight: 600; color: var(--blue-800); font-size: 1rem; margin-bottom: .25rem; }
+    .vaga-dept  { font-size: .8rem; color: var(--gray-500); margin-bottom: .75rem; }
+    .vaga-badge {
+      display: inline-block; padding: .2rem .7rem;
+      background: var(--blue-50); color: var(--blue-700);
+      border-radius: 20px; font-size: .75rem; font-weight: 500;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .7rem 1.5rem; border-radius: 8px;
+      background: var(--blue-600); color: var(--white);
+      font-family: 'DM Sans', sans-serif; font-weight: 600;
+      font-size: .9rem; border: none; cursor: pointer;
+      transition: all .2s ease;
+    }
+    .btn-primary:hover { background: var(--blue-700); transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .7rem 1.5rem; border-radius: 8px;
+      background: var(--white); color: var(--blue-700);
+      font-family: 'DM Sans', sans-serif; font-weight: 600;
+      font-size: .9rem; border: 1.5px solid var(--blue-200); cursor: pointer;
+      transition: all .2s ease;
+    }
+    .btn-secondary:hover { background: var(--blue-50); }
 
-/* RADIO / CHECK */
-.opts{display:flex;flex-direction:column;gap:.6rem;margin-top:.3rem}
-.opt{display:flex;align-items:flex-start;gap:.7rem;cursor:pointer}
-.opt input{width:17px;height:17px;margin-top:2px;accent-color:var(–green);cursor:pointer;flex-shrink:0}
-.opt span{font-size:.92rem;color:#444;line-height:1.4}
+    /* ── FORM ── */
+    .form-wrap {
+      max-width: 720px; margin: 0 auto; padding: 2.5rem 1.5rem;
+    }
+    .form-card {
+      background: var(--white); border-radius: var(--radius);
+      border: 1px solid var(--blue-100); box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .form-header {
+      background: linear-gradient(135deg, var(--blue-700), var(--blue-500));
+      padding: 2rem 2rem 1.5rem; color: var(--white);
+    }
+    .form-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem; font-weight: 400; margin-bottom: .25rem;
+    }
+    .form-header p { font-size: .85rem; color: var(--blue-100); }
+    .form-body { padding: 2rem; }
 
-/* FILE */
-.upload-box{border:2px dashed var(–green);border-radius:10px;padding:1.5rem;text-align:center;cursor:pointer;background:#f9f7f5;transition:.2s}
-.upload-box:hover{background:#f0ebe8}
-.upload-box input{display:none}
-.upload-box .icon{font-size:2rem;margin-bottom:.4rem}
-.upload-box p{font-size:.9rem;color:#555;margin-bottom:.2rem}
-.upload-box small{color:#999;font-size:.8rem}
-.file-ok{margin-top:.8rem;padding:.7rem;background:#d4edda;border-left:4px solid var(–ok);border-radius:6px;font-size:.85rem;color:#155724;display:none}
-.file-ok.show{display:block}
+    .form-section { margin-bottom: 2rem; }
+    .form-section-title {
+      font-size: .8rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--blue-600);
+      margin-bottom: 1rem; padding-bottom: .5rem;
+      border-bottom: 1px solid var(--blue-100);
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: .4rem; }
+    .form-group.full { grid-column: 1 / -1; }
+    label { font-size: .85rem; font-weight: 500; color: var(--gray-700); }
+    label span.req { color: var(--red-500); margin-left: 2px; }
 
-/* DISC BOX */
-.disc-box{background:var(–light);border-left:4px solid var(–green);border-radius:8px;padding:1.2rem;margin-bottom:1rem}
-.disc-box h4{font-size:1rem;margin-bottom:.4rem}
-.disc-box p{font-size:.85rem;color:#666;margin-bottom:.8rem}
-.disc-btn{display:inline-block;background:var(–green);color:#fff;padding:.7rem 1.3rem;border-radius:8px;text-decoration:none;font-weight:600;font-size:.9rem;transition:.2s}
-.disc-btn:hover{background:var(–blue)}
+    input[type=text], input[type=email], input[type=tel], input[type=number],
+    select, textarea {
+      font-family: 'DM Sans', sans-serif; font-size: .9rem;
+      padding: .65rem .9rem; border-radius: var(--radius-sm);
+      border: 1.5px solid var(--gray-200);
+      background: var(--white); color: var(--gray-800);
+      transition: border-color .15s, box-shadow .15s;
+      outline: none; width: 100%;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--blue-400);
+      box-shadow: 0 0 0 3px rgba(59,130,246,.12);
+    }
+    textarea { resize: vertical; min-height: 90px; }
 
-/* MSGS */
-.msg{padding:1rem;border-radius:8px;margin-bottom:1rem;display:none;font-size:.9rem}
-.msg.show{display:block}
-.msg.ok{background:#d4edda;color:#155724;border-left:4px solid var(–ok)}
-.msg.err{background:#f8d7da;color:#721c24;border-left:4px solid var(–red)}
+    .radio-group { display: flex; flex-direction: column; gap: .5rem; }
+    .radio-item  { display: flex; align-items: center; gap: .6rem; cursor: pointer; }
+    .radio-item input[type=radio], .radio-item input[type=checkbox] {
+      width: 16px; height: 16px; accent-color: var(--blue-600); cursor: pointer;
+    }
+    .radio-item label { font-size: .85rem; color: var(--gray-700); cursor: pointer; font-weight: 400; }
 
-/* BTN */
-.btn{background:var(–green);color:#fff;padding:1rem;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;width:100%;transition:.2s;margin-top:1rem}
-.btn:hover{background:var(–blue);transform:translateY(-1px)}
-.btn:disabled{background:#bbb;cursor:not-allowed;transform:none}
-.btn-outline{background:none;border:2px solid var(–green);color:var(–green);padding:.6rem 1.2rem;border-radius:8px;font-weight:600;cursor:pointer;font-size:.9rem;transition:.2s}
-.btn-outline:hover{background:var(–green);color:#fff}
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .checkbox-pill {
+      display: flex; align-items: center; gap: .4rem;
+      padding: .4rem .9rem; border-radius: 20px;
+      border: 1.5px solid var(--gray-200); cursor: pointer;
+      font-size: .82rem; transition: all .15s;
+    }
+    .checkbox-pill:has(input:checked) {
+      background: var(--blue-50); border-color: var(--blue-400); color: var(--blue-700);
+    }
+    .checkbox-pill input { display: none; }
 
-/* STATS */
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.5rem}
-.stat{background:#fff;border-radius:10px;padding:1.2rem;text-align:center;border-top:4px solid var(–green);box-shadow:0 2px 8px rgba(0,0,0,.06)}
-.stat h3{font-size:2rem;color:var(–green)}
-.stat p{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-top:.2rem}
+    .upload-zone {
+      border: 2px dashed var(--blue-200); border-radius: var(--radius);
+      padding: 2rem; text-align: center; cursor: pointer;
+      transition: all .2s; background: var(--blue-50);
+    }
+    .upload-zone:hover { border-color: var(--blue-400); background: var(--blue-100); }
+    .upload-zone input { display: none; }
+    .upload-icon { font-size: 2rem; margin-bottom: .5rem; }
+    .upload-text { font-size: .85rem; color: var(--gray-600); }
+    .upload-hint { font-size: .75rem; color: var(--gray-400); margin-top: .25rem; }
+    .upload-name { font-size: .82rem; color: var(--blue-600); font-weight: 500; margin-top: .5rem; display: none; }
 
-/* FILTERS */
-.filters{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:1rem}
-.filters input,.filters select{flex:1;min-width:140px}
+    .disc-box {
+      background: var(--blue-50); border: 1px solid var(--blue-200);
+      border-radius: var(--radius); padding: 1.25rem;
+    }
+    .disc-box p { font-size: .85rem; color: var(--gray-700); margin-bottom: .75rem; }
+    .disc-link {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .82rem; color: var(--blue-600); font-weight: 600;
+      text-decoration: none; margin-bottom: 1rem;
+    }
+    .disc-link:hover { text-decoration: underline; }
 
-/* CANDIDATE CARD */
-.cand{border:1px solid #eee;border-radius:10px;padding:1.2rem;margin-bottom:.8rem;transition:.2s}
-.cand:hover{border-color:var(–green);box-shadow:0 2px 8px rgba(107,142,127,.15)}
-.cand-name{font-size:1rem;font-weight:700;margin-bottom:.4rem}
-.cand-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.6rem}
-.tag{background:var(–light);color:var(–green);border-radius:12px;padding:.2rem .7rem;font-size:.78rem;font-weight:600}
-.cand-contact{font-size:.85rem;margin-bottom:.6rem}
-.cand-contact a{color:var(–green);text-decoration:none;margin-right:1rem}
-.cand-actions{display:flex;gap:.5rem;justify-content:flex-end;flex-wrap:wrap}
-.btn-sm{background:none;border:1px solid #ddd;padding:.4rem .9rem;border-radius:6px;cursor:pointer;color:#666;font-size:.82rem;transition:.2s}
-.btn-sm:hover{background:var(–green);color:#fff;border-color:var(–green)}
-.btn-sm.danger:hover{background:var(–red);border-color:var(–red)}
+    .form-footer {
+      padding: 1.5rem 2rem; border-top: 1px solid var(--gray-100);
+      display: flex; justify-content: flex-end; gap: 1rem;
+    }
 
-/* MODAL */
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:999;align-items:center;justify-content:center;padding:1rem}
-.modal.show{display:flex}
-.modal-box{background:#fff;border-radius:12px;padding:1.5rem;max-width:680px;width:100%;max-height:90vh;overflow-y:auto}
-.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid #eee}
-.modal-head h2{color:var(–green);font-size:1.2rem}
-.close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:#999}
-.detail-row{padding:.6rem 0;border-bottom:1px solid #f0f0f0;font-size:.9rem}
-.detail-row strong{color:var(–dark);display:block;margin-bottom:.2rem;font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;color:#888}
+    /* ── SUCESSO ── */
+    .success-banner {
+      display: none; align-items: center; gap: .75rem;
+      background: var(--green-50); border: 1px solid var(--green-500);
+      border-radius: var(--radius); padding: 1rem 1.25rem;
+      margin: 0 2rem 1.5rem; color: var(--green-700);
+      font-size: .9rem; font-weight: 500;
+    }
+    .success-banner.show { display: flex; }
 
-/* EMPTY */
-.empty{text-align:center;padding:2.5rem;color:#aaa}
-.empty p{font-size:1rem}
+    /* ── ADMIN ── */
+    .admin-wrap { max-width: 1000px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+    .admin-lock {
+      background: var(--white); border-radius: var(--radius);
+      border: 1px solid var(--blue-100); box-shadow: var(--shadow);
+      max-width: 380px; margin: 3rem auto; padding: 2.5rem; text-align: center;
+    }
+    .admin-lock h2 {
+      font-family: 'DM Serif Display', serif; color: var(--blue-800);
+      font-size: 1.4rem; margin-bottom: .5rem;
+    }
+    .admin-lock p { font-size: .85rem; color: var(--gray-500); margin-bottom: 1.5rem; }
+    .admin-lock input {
+      font-family: 'DM Sans', sans-serif; font-size: .9rem;
+      padding: .65rem .9rem; border-radius: var(--radius-sm);
+      border: 1.5px solid var(--gray-200); width: 100%;
+      margin-bottom: .75rem; outline: none;
+    }
+    .admin-lock input:focus { border-color: var(--blue-400); box-shadow: 0 0 0 3px rgba(59,130,246,.12); }
+    .admin-lock .err { color: var(--red-500); font-size: .8rem; margin-bottom: .75rem; display: none; }
+    .admin-lock .err.show { display: block; }
 
-/* ADMIN LOGIN */
-.admin-login{max-width:400px;margin:0 auto}
-.pwd-row{display:flex;gap:.8rem;margin-top:.8rem}
-.pwd-row input{flex:1}
-.pwd-row button{background:var(–green);color:#fff;border:none;border-radius:8px;padding:.8rem 1.2rem;cursor:pointer;font-weight:600;white-space:nowrap}
+    #adminPanel { display: none; }
+    .admin-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.5rem; flex-wrap: gap;
+    }
+    .admin-title { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--blue-800); }
+    .admin-actions { display: flex; gap: .75rem; }
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card {
+      background: var(--white); border: 1px solid var(--blue-100);
+      border-radius: var(--radius); padding: 1.25rem; text-align: center; box-shadow: var(--shadow);
+    }
+    .stat-num { font-size: 2rem; font-weight: 700; color: var(--blue-700); line-height: 1; }
+    .stat-label { font-size: .78rem; color: var(--gray-500); margin-top: .35rem; }
 
-/* COMPETENCY SECTION */
-.comp-info{background:#fffbf0;border:1px solid #f0d080;border-radius:8px;padding:1rem;margin-bottom:1rem;font-size:.87rem;color:#7a6020}
+    .filter-bar { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center; }
+    .filter-bar select {
+      font-family: 'DM Sans', sans-serif; font-size: .85rem;
+      padding: .5rem .9rem; border-radius: 8px;
+      border: 1.5px solid var(--gray-200); background: var(--white);
+      color: var(--gray-700); cursor: pointer; outline: none;
+    }
+    .filter-bar input {
+      font-family: 'DM Sans', sans-serif; font-size: .85rem;
+      padding: .5rem .9rem; border-radius: 8px;
+      border: 1.5px solid var(--gray-200); background: var(--white);
+      color: var(--gray-700); outline: none; flex: 1; min-width: 180px;
+    }
 
-footer{background:var(–blue);color:#fff;text-align:center;padding:1.5rem;margin-top:2rem;font-size:.85rem}
+    .candidates-table {
+      background: var(--white); border-radius: var(--radius);
+      border: 1px solid var(--blue-100); box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .table-header {
+      display: grid; grid-template-columns: 2fr 1.5fr 1fr 1fr 80px;
+      padding: .75rem 1.25rem;
+      background: var(--blue-50); border-bottom: 1px solid var(--blue-100);
+      font-size: .75rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--blue-700);
+    }
+    .table-row {
+      display: grid; grid-template-columns: 2fr 1.5fr 1fr 1fr 80px;
+      padding: 1rem 1.25rem; align-items: center;
+      border-bottom: 1px solid var(--gray-100);
+      transition: background .15s; cursor: pointer;
+    }
+    .table-row:last-child { border-bottom: none; }
+    .table-row:hover { background: var(--blue-50); }
+    .candidate-name { font-weight: 500; color: var(--gray-800); font-size: .9rem; }
+    .candidate-email { font-size: .82rem; color: var(--gray-500); }
+    .table-cell { font-size: .85rem; color: var(--gray-600); }
+    .badge {
+      display: inline-block; padding: .2rem .65rem;
+      border-radius: 20px; font-size: .72rem; font-weight: 600;
+    }
+    .badge-blue  { background: var(--blue-50);  color: var(--blue-700);  }
+    .badge-green { background: var(--green-50); color: var(--green-700); }
 
-@media(max-width:500px){
-header h1{font-size:1.5rem}
-.stats{grid-template-columns:repeat(2,1fr)}
-.card{padding:1.2rem}
-}
-</style>
+    .empty-state {
+      padding: 4rem; text-align: center; color: var(--gray-400);
+    }
+    .empty-state .icon { font-size: 3rem; margin-bottom: 1rem; }
+    .empty-state p { font-size: .9rem; }
 
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.4); z-index: 200;
+      align-items: flex-start; justify-content: center;
+      padding: 2rem 1rem; overflow-y: auto;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--white); border-radius: var(--radius);
+      max-width: 680px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,.2);
+      animation: slideUp .25s ease;
+    }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } }
+    .modal-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--gray-100);
+    }
+    .modal-header h3 {
+      font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--blue-800);
+    }
+    .modal-close {
+      width: 32px; height: 32px; border-radius: 8px; border: none;
+      background: var(--gray-100); color: var(--gray-600); cursor: pointer;
+      font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+    }
+    .modal-close:hover { background: var(--gray-200); }
+    .modal-body { padding: 1.5rem; max-height: 70vh; overflow-y: auto; }
+    .detail-row {
+      display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;
+    }
+    .detail-item { flex: 1; min-width: 160px; }
+    .detail-label { font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--blue-600); margin-bottom: .25rem; }
+    .detail-value { font-size: .9rem; color: var(--gray-700); }
+    .detail-long { margin-bottom: 1.25rem; }
+    .detail-long .detail-label { margin-bottom: .4rem; }
+    .detail-long .detail-value {
+      background: var(--gray-50); border-radius: 8px; padding: .75rem;
+      font-size: .85rem; color: var(--gray-700); line-height: 1.5;
+      white-space: pre-wrap;
+    }
+    .modal-actions {
+      padding: 1rem 1.5rem; border-top: 1px solid var(--gray-100);
+      display: flex; gap: .75rem; justify-content: flex-end;
+    }
+    .btn-danger {
+      padding: .6rem 1.2rem; border-radius: 8px;
+      background: var(--red-50); color: var(--red-500);
+      font-family: 'DM Sans', sans-serif; font-weight: 600;
+      font-size: .85rem; border: none; cursor: pointer;
+    }
+    .btn-danger:hover { background: #fee2e2; }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      border-top: 1px solid var(--blue-100);
+      background: var(--white); text-align: center;
+      padding: 1.5rem; color: var(--gray-400); font-size: .8rem;
+      margin-top: 4rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .table-header, .table-row { grid-template-columns: 1fr 1fr 80px; }
+      .table-header span:nth-child(3),
+      .table-header span:nth-child(4),
+      .table-row .table-cell:nth-child(3),
+      .table-row .table-cell:nth-child(4) { display: none; }
+      .nav-tabs { gap: .1rem; }
+      .nav-btn { padding: .4rem .75rem; font-size: .8rem; }
+      .form-footer { flex-direction: column; }
+      .form-footer button { width: 100%; }
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <h1>🐾 Bicho de Estimação</h1>
-  <p>Faça parte do nosso time!</p>
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="logo" onclick="goTo('form')">
+      <div class="logo-mark">B</div>
+      <div class="logo-text">
+        Bicho de Estimação
+        <span class="logo-sub">Recrutamento & Seleção</span>
+      </div>
+    </a>
+    <nav class="nav-tabs">
+      <button class="nav-btn active" data-section="form" onclick="goTo('form')">Candidatar-se</button>
+      <button class="nav-btn outline" data-section="admin" onclick="goTo('admin')">🔐 RH</button>
+    </nav>
+  </div>
 </header>
 
-<div class="hero">
-  <h2>Trabalhe com quem ama animais</h2>
-  <p>Buscamos pessoas dedicadas, atenciosas e apaixonadas por pets. Se é você, queremos te conhecer!</p>
-</div>
+<!-- ═══ FORMULÁRIO ═══ -->
+<section id="form" class="section active">
+  <div class="form-wrap">
 
-<nav>
-  <button class="active" onclick="goTo('form',this)">📋 Candidatar-se</button>
-  <button onclick="goTo('admin',this)">🔐 Admin</button>
-</nav>
-
-<div class="container">
-
-  <!-- ===== FORMULÁRIO ===== -->
-
-  <div id="form" class="section active">
-    <div class="card">
-      <h2>Sua Candidatura</h2>
-      <p class="sub">Preencha com atenção — campos com * são obrigatórios</p>
-
-```
-  <div class="msg ok" id="msgOk">✅ Candidatura enviada com sucesso! Em breve entraremos em contato.</div>
-  <div class="msg err" id="msgErr"></div>
-
-  <form id="mainForm" onsubmit="submitForm(event)">
-
-    <!-- DADOS PESSOAIS -->
-    <div class="stitle">👤 Dados Pessoais</div>
-
-    <div class="form-group">
-      <label class="req">Nome completo</label>
-      <input type="text" id="f_name" required>
-    </div>
-    <div class="form-group">
-      <label class="req">E-mail</label>
-      <input type="email" id="f_email" required>
-    </div>
-    <div class="form-group">
-      <label class="req">WhatsApp</label>
-      <input type="tel" id="f_phone" placeholder="(62) 9XXXX-XXXX" required>
-    </div>
-    <div class="form-group">
-      <label class="req">Idade</label>
-      <input type="number" id="f_age" min="16" max="70" required>
+    <div class="success-banner" id="successBanner">
+      ✅ Candidatura enviada com sucesso! Em breve entraremos em contato.
     </div>
 
-    <!-- CURRÍCULO -->
-    <div class="stitle">📄 Currículo</div>
-    <div class="form-group">
-      <div class="upload-box" onclick="document.getElementById('f_file').click()">
-        <div class="icon">📎</div>
-        <p><strong>Toque para anexar seu currículo</strong></p>
-        <small>PDF, Word, JPG ou PNG — até 10MB</small>
+    <div class="form-card">
+      <div class="form-header">
+        <h2>Sua Candidatura</h2>
+        <p>Preencha com atenção — campos com * são obrigatórios</p>
       </div>
-      <input type="file" id="f_file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" onchange="showFile(this)">
-      <div class="file-ok" id="fileOk"></div>
+      <div class="form-body">
+
+        <!-- DADOS PESSOAIS -->
+        <div class="form-section">
+          <div class="form-section-title">👤 Dados Pessoais</div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>Nome completo <span class="req">*</span></label>
+              <input type="text" id="nome" placeholder="Seu nome completo">
+            </div>
+            <div class="form-group">
+              <label>E-mail <span class="req">*</span></label>
+              <input type="email" id="email" placeholder="email@exemplo.com">
+            </div>
+            <div class="form-group">
+              <label>WhatsApp <span class="req">*</span></label>
+              <input type="tel" id="telefone" placeholder="(62) 99999-9999">
+            </div>
+            <div class="form-group">
+              <label>Idade</label>
+              <input type="number" id="idade" placeholder="Ex: 25" min="16" max="70">
+            </div>
+          </div>
+        </div>
+
+        <!-- CURRÍCULO -->
+        <div class="form-section">
+          <div class="form-section-title">📄 Currículo</div>
+          <label class="upload-zone" for="cvFile" onclick="document.getElementById('cvFile').click()">
+            <input type="file" id="cvFile" accept=".pdf,.doc,.docx,.jpg,.png" onchange="onFileChange(this)">
+            <div class="upload-icon">📎</div>
+            <div class="upload-text">Toque para anexar seu currículo</div>
+            <div class="upload-hint">PDF, Word, JPG ou PNG — até 10MB</div>
+            <div class="upload-name" id="uploadName"></div>
+          </label>
+        </div>
+
+        <!-- VAGA -->
+        <div class="form-section">
+          <div class="form-section-title">💼 Vaga e Disponibilidade</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Vaga de interesse <span class="req">*</span></label>
+              <select id="vaga">
+                <option value="">Selecione...</option>
+                <option>Vendedor(a)</option>
+                <option>Atendente</option>
+                <option>Auxiliar Administrativo</option>
+                <option>Gerente</option>
+                <option>Outro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Experiência profissional</label>
+              <select id="experiencia">
+                <option value="">Selecione...</option>
+                <option>Nenhuma experiência ainda</option>
+                <option>Menos de 1 ano</option>
+                <option>1 a 2 anos</option>
+                <option>Mais de 2 anos</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label>Disponibilidade de horário</label>
+              <div class="checkbox-group">
+                <label class="checkbox-pill"><input type="checkbox" name="disp" value="Matutino"> Matutino (manhã)</label>
+                <label class="checkbox-pill"><input type="checkbox" name="disp" value="Vespertino"> Vespertino (tarde)</label>
+                <label class="checkbox-pill"><input type="checkbox" name="disp" value="Noturno"> Noturno (noite)</label>
+                <label class="checkbox-pill"><input type="checkbox" name="disp" value="Integral"> Integral</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DISC -->
+        <div class="form-section">
+          <div class="form-section-title">🎯 Perfil Comportamental DISC</div>
+          <div class="disc-box">
+            <p>Ajuda a entender seu perfil. Leva cerca de 5 minutos. Após concluir, cole o resultado abaixo.</p>
+            <a href="https://www.mrcoach.com.br/perfil-comportamental-disc.php" target="_blank" class="disc-link">
+              👉 Clique aqui para realizar o teste
+            </a>
+            <div class="form-group">
+              <label>Resultado ou perfil DISC (opcional)</label>
+              <textarea id="disc" placeholder="Ex: Perfil D — Alta dominância e resultado..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- ANIMAIS -->
+        <div class="form-section">
+          <div class="form-section-title">🐾 Relação com Animais</div>
+          <div class="radio-group">
+            <label class="radio-item"><input type="radio" name="animais" value="Amo muito — tenho ou já tive pets"> <label>Amo muito — tenho ou já tive pets</label></label>
+            <label class="radio-item"><input type="radio" name="animais" value="Gosto, mas prefiro não ter muito contato"> <label>Gosto, mas prefiro não ter muito contato</label></label>
+            <label class="radio-item"><input type="radio" name="animais" value="Tenho alergia a animais"> <label>Tenho alergia a animais</label></label>
+            <label class="radio-item"><input type="radio" name="animais" value="Sou indiferente"> <label>Sou indiferente</label></label>
+          </div>
+        </div>
+
+        <!-- COMPETÊNCIAS -->
+        <div class="form-section">
+          <div class="form-section-title">⭐ Perguntas por Competência</div>
+          <p style="font-size:.83rem;color:var(--gray-500);margin-bottom:1.25rem;">💡 Responda com exemplos reais. Não existe resposta certa ou errada — queremos conhecer como você pensa e age.</p>
+
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>1. COMUNICAÇÃO — Como você garante que uma informação importante chegou corretamente ao destinatário? Dê um exemplo.</label>
+              <textarea id="q1" rows="3"></textarea>
+            </div>
+            <div class="form-group full">
+              <label>2. TRABALHO EM EQUIPE — Descreva uma vez que precisou colaborar com alguém diferente de você. Como foi?</label>
+              <textarea id="q2" rows="3"></textarea>
+            </div>
+            <div class="form-group full">
+              <label>3. FOCO NO CLIENTE — Conte uma situação em que você atendeu alguém insatisfeito. O que fez?</label>
+              <textarea id="q3" rows="3"></textarea>
+            </div>
+            <div class="form-group full">
+              <label>4. PROATIVIDADE — Dê um exemplo de quando você identificou um problema antes de ser apontado e tomou iniciativa.</label>
+              <textarea id="q4" rows="3"></textarea>
+            </div>
+            <div class="form-group full">
+              <label>5. ADAPTABILIDADE — Conte uma situação em que as regras ou rotina mudaram de repente. Como você lidou?</label>
+              <textarea id="q5" rows="3"></textarea>
+            </div>
+            <div class="form-group full">
+              <label>6. GESTÃO DE CONFLITOS — Como você lida quando discorda de um colega ou superior? Já passou por isso?</label>
+              <textarea id="q6" rows="3"></textarea>
+            </div>
+            <div class="form-group full">
+              <label>7. APRENDIZADO CONTÍNUO — Qual foi o maior aprendizado profissional que você teve? Como ele mudou sua forma de agir?</label>
+              <textarea id="q7" rows="3"></textarea>
+            </div>
+            <div class="form-group full">
+              <label>8. RESILIÊNCIA — Conte uma situação difícil ou frustrante no trabalho. Como você superou?</label>
+              <textarea id="q8" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- MOTIVAÇÃO -->
+        <div class="form-section">
+          <div class="form-section-title">💬 Motivação e Carreira</div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>O que te motiva a ir trabalhar todos os dias?</label>
+              <textarea id="motivacao"></textarea>
+            </div>
+            <div class="form-group full">
+              <label>Por que quer trabalhar na Bicho de Estimação?</label>
+              <textarea id="motivo_bicho"></textarea>
+            </div>
+            <div class="form-group full">
+              <label>Como você reage sob pressão ou prazos apertados?</label>
+              <textarea id="pressao"></textarea>
+            </div>
+            <div class="form-group full">
+              <label>Tem interesse em crescer e fazer plano de carreira conosco?</label>
+              <div class="radio-group">
+                <label class="radio-item"><input type="radio" name="carreira" value="Sim, com certeza"> <label>Sim, com certeza</label></label>
+                <label class="radio-item"><input type="radio" name="carreira" value="Talvez, dependendo das oportunidades"> <label>Talvez, dependendo das oportunidades</label></label>
+                <label class="radio-item"><input type="radio" name="carreira" value="No momento não"> <label>No momento não</label></label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUEM É VOCÊ -->
+        <div class="form-section">
+          <div class="form-section-title">🌟 Quem é Você?</div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>Fale um pouco sobre você — quem é, de onde vem, o que te define</label>
+              <textarea id="sobre" rows="4"></textarea>
+            </div>
+            <div class="form-group full">
+              <label>Seus maiores pontos fortes</label>
+              <textarea id="pontos_fortes"></textarea>
+            </div>
+            <div class="form-group full">
+              <label>Em qual área você ainda quer crescer? Como pretende melhorar?</label>
+              <textarea id="crescimento"></textarea>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /form-body -->
+
+      <div class="form-footer">
+        <button class="btn-secondary" onclick="limparForm()">Limpar</button>
+        <button class="btn-primary" onclick="salvarCandidatura()">✅ Enviar Candidatura</button>
+      </div>
+    </div><!-- /form-card -->
+  </div>
+</section>
+
+<!-- ═══ ADMIN ═══ -->
+<section id="admin" class="section">
+  <div class="admin-wrap">
+
+    <div class="admin-lock" id="adminLock">
+      <div style="font-size:2.5rem;margin-bottom:.75rem;">🔐</div>
+      <h2>Painel RH</h2>
+      <p>Acesso restrito ao time de Gente & Gestão</p>
+      <input type="password" id="adminSenha" placeholder="Senha" onkeydown="if(event.key==='Enter')unlockAdmin()">
+      <div class="err" id="senhaErr">Senha incorreta. Tente novamente.</div>
+      <button class="btn-primary" style="width:100%;justify-content:center" onclick="unlockAdmin()">Entrar</button>
     </div>
 
-    <!-- VAGA -->
-    <div class="stitle">💼 Vaga e Disponibilidade</div>
+    <div id="adminPanel">
+      <div class="admin-topbar">
+        <h2 class="admin-title">📋 Candidatos</h2>
+        <div class="admin-actions">
+          <button class="btn-secondary" onclick="exportarCSV()">⬇️ Exportar CSV</button>
+          <button class="btn-secondary" onclick="limparTodos()" style="color:var(--red-500)">🗑 Limpar todos</button>
+          <button class="btn-secondary" onclick="logoutAdmin()">Sair</button>
+        </div>
+      </div>
 
-    <div class="form-group">
-      <label class="req">Vaga de interesse</label>
-      <select id="f_position" required>
-        <option value="">Selecione...</option>
-        <option>Vendedor(a)</option>
-        <option>Atendente</option>
-        <option>Auxiliar Administrativo</option>
-        <option>Gerente</option>
-        <option>Outro</option>
-      </select>
-    </div>
+      <div class="stats-row" id="statsRow"></div>
 
-    <div class="form-group">
-      <label class="req">Tempo de experiência profissional</label>
-      <div class="opts">
-        <label class="opt"><input type="radio" name="exp" value="Nenhuma" required><span>Nenhuma experiência ainda</span></label>
-        <label class="opt"><input type="radio" name="exp" value="Menos de 1 ano"><span>Menos de 1 ano</span></label>
-        <label class="opt"><input type="radio" name="exp" value="1 a 2 anos"><span>1 a 2 anos</span></label>
-        <label class="opt"><input type="radio" name="exp" value="Mais de 2 anos"><span>Mais de 2 anos</span></label>
+      <div class="filter-bar">
+        <input type="text" id="busca" placeholder="🔍 Buscar candidato..." oninput="renderAdmin()">
+        <select id="filtroVaga" onchange="renderAdmin()">
+          <option value="">Todas as vagas</option>
+          <option>Vendedor(a)</option>
+          <option>Atendente</option>
+          <option>Auxiliar Administrativo</option>
+          <option>Gerente</option>
+          <option>Outro</option>
+        </select>
+      </div>
+
+      <div class="candidates-table">
+        <div class="table-header">
+          <span>Candidato</span>
+          <span>Contato</span>
+          <span>Vaga</span>
+          <span>Experiência</span>
+          <span>Data</span>
+        </div>
+        <div id="candidatesList"></div>
       </div>
     </div>
-
-    <div class="form-group">
-      <label class="req">Disponibilidade de horário</label>
-      <div class="opts">
-        <label class="opt"><input type="radio" name="avail" value="Matutino" required><span>Matutino (manhã)</span></label>
-        <label class="opt"><input type="radio" name="avail" value="Vespertino"><span>Vespertino (tarde)</span></label>
-        <label class="opt"><input type="radio" name="avail" value="Noturno"><span>Noturno (noite)</span></label>
-        <label class="opt"><input type="radio" name="avail" value="Integral"><span>Integral</span></label>
-      </div>
-    </div>
-
-    <!-- DISC -->
-    <div class="stitle">🎯 Perfil Comportamental DISC</div>
-    <div class="disc-box">
-      <h4>Teste DISC gratuito</h4>
-      <p>Ajuda a entender seu perfil. Leva cerca de 5 minutos. Após concluir, cole o resultado abaixo.</p>
-      <a href="https://www.mrcoach.com.br/perfil-comportamental-disc.php" target="_blank" class="disc-btn">🎯 Fazer o Teste DISC</a>
-    </div>
-    <div class="form-group">
-      <label>Resultado ou perfil DISC (opcional)</label>
-      <textarea id="f_disc" placeholder="Ex: Perfil D — Dominante. Cole aqui o resultado ou descreva..."></textarea>
-    </div>
-
-    <!-- SOBRE ANIMAIS -->
-    <div class="stitle">🐾 Relação com Animais</div>
-
-    <div class="form-group">
-      <label class="req">Como é sua relação com animais?</label>
-      <div class="opts">
-        <label class="opt"><input type="radio" name="animals" value="Amo muito" required><span>Amo muito — tenho ou já tive pets</span></label>
-        <label class="opt"><input type="radio" name="animals" value="Gosto mas prefiro distância"><span>Gosto, mas prefiro não ter muito contato</span></label>
-        <label class="opt"><input type="radio" name="animals" value="Tenho alergia"><span>Tenho alergia a animais</span></label>
-        <label class="opt"><input type="radio" name="animals" value="Indiferente"><span>Sou indiferente</span></label>
-      </div>
-    </div>
-
-    <!-- COMPETÊNCIAS -->
-    <div class="stitle">⭐ Perguntas por Competência</div>
-    <div class="comp-info">
-      💡 <strong>Responda com exemplos reais.</strong> Não existe resposta certa ou errada — queremos conhecer como você pensa e age.
-    </div>
-
-    <div class="form-group">
-      <label class="req">1. COMUNICAÇÃO — Como você garante que uma informação importante chegou corretamente ao destinatário? Dê um exemplo.</label>
-      <textarea id="f_com" required placeholder="Conte uma situação real..."></textarea>
-    </div>
-
-    <div class="form-group">
-      <label class="req">2. TRABALHO EM EQUIPE — Descreva uma vez que precisou colaborar com alguém diferente de você. Como foi?</label>
-      <textarea id="f_team" required placeholder="Conte uma situação real..."></textarea>
-    </div>
-
-    <div class="form-group">
-      <label class="req">3. FOCO NO CLIENTE — Conte uma situação em que você atendeu alguém insatisfeito. O que fez?</label>
-      <textarea id="f_client" required placeholder="Conte uma situação real..."></textarea>
-    </div>
-
-    <div class="form-group">
-      <label class="req">4. PROATIVIDADE — Dê um exemplo de quando você identificou um problema antes de ser apontado e tomou iniciativa.</label>
-      <textarea id="f_init" required placeholder="Conte uma situação real..."></textarea>
-    </div>
-
-    <div class="form-group">
-      <label class="req">5. ADAPTABILIDADE — Conte uma situação em que as regras ou rotina mudaram de repente. Como você lidou?</label>
-      <textarea id="f_adapt" required placeholder="Conte uma situação real..."></textarea>
-    </div>
-
-    <div class="form-group">
-      <label class="req">6. GESTÃO DE CONFLITOS — Como você lida quando discorda de um colega ou superior? Já passou por isso?</label>
-      <textarea id="f_conf" required placeholder="Conte uma situação real..."></textarea>
-    </div>
-
-    <div class="form-group">
-      <label class="req">7. APRENDIZADO CONTÍNUO — Qual foi o maior aprendizado profissional que você teve? Como ele mudou sua forma de agir?</label>
-      <textarea id="f_learn" required placeholder="Conte uma situação real..."></textarea>
-    </div>
-
-    <div class="form-group">
-      <label class="req">8. RESILIÊNCIA — Conte uma situação difícil ou frustrante no trabalho. Como você superou?</label>
-      <textarea id="f_resil" required placeholder="Conte uma situação real..."></textarea>
-    </div>
-
-    <!-- MOTIVAÇÃO -->
-    <div class="stitle">💬 Motivação e Carreira</div>
-
-    <div class="form-group">
-      <label class="req">O que te motiva a ir trabalhar todos os dias?</label>
-      <textarea id="f_motiv" required></textarea>
-    </div>
-
-    <div class="form-group">
-      <label class="req">Por que quer trabalhar na Bicho de Estimação?</label>
-      <textarea id="f_why" required></textarea>
-    </div>
-
-    <div class="form-group">
-      <label class="req">Como você reage sob pressão ou prazos apertados?</label>
-      <textarea id="f_press" required></textarea>
-    </div>
-
-    <div class="form-group">
-      <label class="req">Tem interesse em crescer e fazer plano de carreira conosco?</label>
-      <div class="opts">
-        <label class="opt"><input type="radio" name="career" value="Sim" required><span>Sim, com certeza</span></label>
-        <label class="opt"><input type="radio" name="career" value="Talvez"><span>Talvez, dependendo das oportunidades</span></label>
-        <label class="opt"><input type="radio" name="career" value="Não"><span>No momento não</span></label>
-      </div>
-    </div>
-
-    <!-- SOBRE VOCÊ -->
-    <div class="stitle">🌟 Quem é Você?</div>
-
-    <div class="form-group">
-      <label class="req">Fale um pouco sobre você — quem é, de onde vem, o que te define</label>
-      <textarea id="f_about" required placeholder="Conta sua história com suas próprias palavras..."></textarea>
-    </div>
-
-    <div class="form-group">
-      <label class="req">Seus maiores pontos fortes</label>
-      <textarea id="f_strong" required></textarea>
-    </div>
-
-    <div class="form-group">
-      <label class="req">Em qual área você ainda quer crescer? Como pretende melhorar?</label>
-      <textarea id="f_grow" required></textarea>
-    </div>
-
-    <button type="submit" class="btn" id="submitBtn">✅ Enviar Candidatura</button>
-  </form>
-</div>
-```
 
   </div>
-
-  <!-- ===== ADMIN ===== -->
-
-  <div id="admin" class="section">
-
-```
-<div id="adminLogin" class="card admin-login">
-  <h2>🔐 Painel Admin</h2>
-  <p class="sub">Acesso restrito ao time de RH</p>
-  <div class="msg err" id="loginErr">Senha incorreta.</div>
-  <label style="font-weight:600;font-size:.9rem">Senha</label>
-  <div class="pwd-row">
-    <input type="password" id="pwdInput" placeholder="Digite a senha..." onkeydown="if(event.key==='Enter')checkLogin()">
-    <button onclick="checkLogin()">Entrar</button>
-  </div>
-</div>
-
-<div id="adminPanel" style="display:none">
-  <div class="stats" id="statsGrid"></div>
-
-  <div class="card">
-    <h2>📋 Candidatos</h2>
-    <div class="filters">
-      <input type="text" id="srchName" placeholder="🔍 Buscar por nome..." oninput="renderList()">
-      <select id="srchPos" onchange="renderList()">
-        <option value="">Todas as vagas</option>
-        <option>Vendedor(a)</option>
-        <option>Atendente</option>
-        <option>Auxiliar Administrativo</option>
-        <option>Gerente</option>
-        <option>Outro</option>
-      </select>
-    </div>
-    <div id="candList"></div>
-  </div>
-</div>
-```
-
-  </div>
-
-</div><!-- end container -->
+</section>
 
 <!-- MODAL -->
-
-<div class="modal" id="modal">
-  <div class="modal-box">
-    <div class="modal-head">
-      <h2 id="modalTitle">Candidato</h2>
-      <button class="close" onclick="closeModal()">✕</button>
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalName">Candidato</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
-    <div id="modalBody"></div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-actions">
+      <button class="btn-danger" id="modalDelete">🗑 Excluir candidato</button>
+      <button class="btn-primary" id="modalWhats">💬 WhatsApp</button>
+    </div>
   </div>
 </div>
 
-<footer>🐾 Bicho de Estimação — Recrutamento &copy; 2026</footer>
+<footer class="site-footer">
+  🐾 Bicho de Estimação — Recrutamento © 2026
+</footer>
 
 <script>
-const PASS = 'bicho2026';
-
-// NAV
-function goTo(id, btn) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
-}
-
-// FILE
-function showFile(input) {
-  const f = input.files[0];
-  if (!f) return;
-  if (f.size > 10 * 1024 * 1024) { alert('Arquivo muito grande! Máximo 10MB.'); input.value=''; return; }
-  const el = document.getElementById('fileOk');
-  el.textContent = '✓ ' + f.name + ' (' + (f.size/1024).toFixed(1) + ' KB)';
-  el.classList.add('show');
-}
-
-// DB
-const DB = {
-  get: () => JSON.parse(localStorage.getItem('bde_candidates') || '[]'),
-  save: (d) => localStorage.setItem('bde_candidates', JSON.stringify(d)),
-  add(c) {
-    const list = this.get();
-    c.id = Date.now();
-    c.date = new Date().toLocaleDateString('pt-BR');
-    c.time = new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
-    list.push(c);
-    this.save(list);
-  },
-  remove(id) {
-    this.save(this.get().filter(c => c.id !== id));
+  function goTo(sec) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(sec).classList.add('active');
+    document.querySelectorAll('.nav-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.section === sec);
+    });
+    window.scrollTo(0,0);
+    if (sec === 'admin') renderAdmin();
   }
-};
 
-// FORM SUBMIT
-function submitForm(e) {
-  e.preventDefault();
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  btn.textContent = 'Enviando...';
-
-  const radVal = name => { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : ''; };
-
-  const c = {
-    name: document.getElementById('f_name').value,
-    email: document.getElementById('f_email').value,
-    phone: document.getElementById('f_phone').value,
-    age: document.getElementById('f_age').value,
-    position: document.getElementById('f_position').value,
-    exp: radVal('exp'),
-    avail: radVal('avail'),
-    disc: document.getElementById('f_disc').value,
-    animals: radVal('animals'),
-    com: document.getElementById('f_com').value,
-    team: document.getElementById('f_team').value,
-    client: document.getElementById('f_client').value,
-    init: document.getElementById('f_init').value,
-    adapt: document.getElementById('f_adapt').value,
-    conf: document.getElementById('f_conf').value,
-    learn: document.getElementById('f_learn').value,
-    resil: document.getElementById('f_resil').value,
-    motiv: document.getElementById('f_motiv').value,
-    why: document.getElementById('f_why').value,
-    press: document.getElementById('f_press').value,
-    career: radVal('career'),
-    about: document.getElementById('f_about').value,
-    strong: document.getElementById('f_strong').value,
-    grow: document.getElementById('f_grow').value,
-    file: document.getElementById('f_file').files[0]?.name || ''
-  };
-
-  DB.add(c);
-  document.getElementById('msgOk').classList.add('show');
-  document.getElementById('mainForm').reset();
-  document.getElementById('fileOk').classList.remove('show');
-  window.scrollTo({top:0,behavior:'smooth'});
-  btn.disabled = false;
-  btn.textContent = '✅ Enviar Candidatura';
-  setTimeout(() => document.getElementById('msgOk').classList.remove('show'), 6000);
-}
-
-// LOGIN
-function checkLogin() {
-  const v = document.getElementById('pwdInput').value;
-  const err = document.getElementById('loginErr');
-  if (v === PASS) {
-    document.getElementById('adminLogin').style.display = 'none';
-    document.getElementById('adminPanel').style.display = 'block';
-    loadAdmin();
-  } else {
-    err.classList.add('show');
-    setTimeout(() => err.classList.remove('show'), 3000);
+  function onFileChange(input) {
+    const el = document.getElementById('uploadName');
+    if (input.files[0]) { el.textContent = '📎 ' + input.files[0].name; el.style.display = 'block'; }
   }
-}
 
-// ADMIN
-function loadAdmin() {
-  const list = DB.get();
-  const positions = ['Vendedor(a)','Atendente','Auxiliar Administrativo','Gerente','Outro'];
-  const stats = [
-    {label:'Total de Candidatos', val: list.length},
-    {label:'Vendedores', val: list.filter(c=>c.position==='Vendedor(a)').length},
-    {label:'Atendentes', val: list.filter(c=>c.position==='Atendente').length},
-    {label:'Administrativo', val: list.filter(c=>c.position==='Auxiliar Administrativo').length},
-  ];
-  document.getElementById('statsGrid').innerHTML = stats.map(s =>
-    `<div class="stat"><h3>${s.val}</h3><p>${s.label}</p></div>`
-  ).join('');
-  renderList();
-}
-
-function renderList() {
-  const list = DB.get();
-  const srch = document.getElementById('srchName').value.toLowerCase();
-  const pos = document.getElementById('srchPos').value;
-  const filtered = list.filter(c =>
-    c.name.toLowerCase().includes(srch) && (!pos || c.position === pos)
-  );
-  const el = document.getElementById('candList');
-  if (!filtered.length) {
-    el.innerHTML = '<div class="empty"><p>Nenhum candidato encontrado</p></div>';
-    return;
+  function getChecked(name) {
+    return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(i=>i.value).join(', ');
   }
-  el.innerHTML = filtered.reverse().map(c => `
-    <div class="cand">
-      <div class="cand-name">${c.name}</div>
-      <div class="cand-tags">
-        <span class="tag">${c.position}</span>
-        <span class="tag">${c.avail}</span>
-        <span class="tag">${c.date}</span>
+  function getRadio(name) {
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : '';
+  }
+  function val(id) { return (document.getElementById(id)?.value || '').trim(); }
+
+  function salvarCandidatura() {
+    const nome=val('nome'), email=val('email'), tel=val('telefone'), vaga=val('vaga');
+    if (!nome||!email||!tel||!vaga) {
+      alert('Por favor, preencha os campos obrigatórios: Nome, E-mail, WhatsApp e Vaga.');
+      return;
+    }
+    const candidatura = {
+      id: Date.now(), data: new Date().toLocaleDateString('pt-BR'),
+      nome, email, telefone: tel, vaga,
+      idade: val('idade'), experiencia: val('experiencia'),
+      disponibilidade: getChecked('disp'), disc: val('disc'),
+      animais: getRadio('animais'), carreira: getRadio('carreira'),
+      sobre: val('sobre'), pontos_fortes: val('pontos_fortes'), crescimento: val('crescimento'),
+      motivacao: val('motivacao'), motivo_bicho: val('motivo_bicho'), pressao: val('pressao'),
+      q1:val('q1'),q2:val('q2'),q3:val('q3'),q4:val('q4'),
+      q5:val('q5'),q6:val('q6'),q7:val('q7'),q8:val('q8'),
+      curriculo: document.getElementById('cvFile').files[0]?.name || '',
+    };
+    const lista = JSON.parse(localStorage.getItem('candidaturas_bicho')||'[]');
+    lista.push(candidatura);
+    localStorage.setItem('candidaturas_bicho', JSON.stringify(lista));
+    document.getElementById('successBanner').classList.add('show');
+    document.getElementById('successBanner').scrollIntoView({behavior:'smooth',block:'center'});
+    limparForm(false);
+    setTimeout(()=>document.getElementById('successBanner').classList.remove('show'), 6000);
+  }
+
+  function limparForm(confirm=true) {
+    if (confirm && !window.confirm('Limpar todos os campos?')) return;
+    ['nome','email','telefone','idade','disc','sobre','pontos_fortes','crescimento',
+     'motivacao','motivo_bicho','pressao','q1','q2','q3','q4','q5','q6','q7','q8']
+      .forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+    document.getElementById('vaga').value='';
+    document.getElementById('experiencia').value='';
+    document.querySelectorAll('input[type=checkbox]').forEach(c=>c.checked=false);
+    document.querySelectorAll('input[type=radio]').forEach(r=>r.checked=false);
+    document.getElementById('cvFile').value='';
+    document.getElementById('uploadName').style.display='none';
+  }
+
+  function unlockAdmin() {
+    const senha=document.getElementById('adminSenha').value;
+    const err=document.getElementById('senhaErr');
+    if (senha==='bicho2024') {
+      document.getElementById('adminLock').style.display='none';
+      document.getElementById('adminPanel').style.display='block';
+      renderAdmin();
+    } else {
+      err.classList.add('show');
+      setTimeout(()=>err.classList.remove('show'),3000);
+    }
+  }
+
+  function logoutAdmin() {
+    document.getElementById('adminLock').style.display='block';
+    document.getElementById('adminPanel').style.display='none';
+    document.getElementById('adminSenha').value='';
+    goTo('form');
+  }
+
+  function getCandidaturas() {
+    return JSON.parse(localStorage.getItem('candidaturas_bicho')||'[]');
+  }
+
+  function renderAdmin() {
+    const lista=getCandidaturas();
+    const busca=(document.getElementById('busca')?.value||'').toLowerCase();
+    const filtro=document.getElementById('filtroVaga')?.value||'';
+    const filtered=lista.filter(c=>{
+      const match=!busca||c.nome.toLowerCase().includes(busca)||c.email.toLowerCase().includes(busca);
+      return match&&(!filtro||c.vaga===filtro);
+    });
+    const vagas={};
+    lista.forEach(c=>{vagas[c.vaga]=(vagas[c.vaga]||0)+1;});
+    const topVaga=Object.entries(vagas).sort((a,b)=>b[1]-a[1])[0];
+    document.getElementById('statsRow').innerHTML=`
+      <div class="stat-card"><div class="stat-num">${lista.length}</div><div class="stat-label">Total</div></div>
+      <div class="stat-card"><div class="stat-num">${filtered.length}</div><div class="stat-label">Filtrados</div></div>
+      ${topVaga?`<div class="stat-card"><div class="stat-num" style="font-size:1.1rem">${topVaga[0]}</div><div class="stat-label">Vaga mais buscada</div></div>`:''}
+    `;
+    const el=document.getElementById('candidatesList');
+    if (!filtered.length) {
+      el.innerHTML=`<div class="empty-state"><div class="icon">📭</div><p>${lista.length?'Nenhum resultado para o filtro.':'Nenhum candidato ainda.'}</p></div>`;
+      return;
+    }
+    el.innerHTML=filtered.map(c=>`
+      <div class="table-row" onclick="openModal(${c.id})">
+        <div><div class="candidate-name">${c.nome}</div><div class="candidate-email">${c.email}</div></div>
+        <div class="table-cell">${c.telefone}</div>
+        <div class="table-cell"><span class="badge badge-blue">${c.vaga}</span></div>
+        <div class="table-cell">${c.experiencia||'—'}</div>
+        <div class="table-cell" style="font-size:.78rem;color:var(--gray-400)">${c.data}</div>
       </div>
-      <div class="cand-contact">
-        <a href="mailto:${c.email}">📧 ${c.email}</a>
-        <a href="https://wa.me/55${c.phone.replace(/\D/g,'')}" target="_blank">💬 ${c.phone}</a>
+    `).join('');
+  }
+
+  function openModal(id) {
+    const c=getCandidaturas().find(x=>x.id===id);
+    if(!c)return;
+    document.getElementById('modalName').textContent=c.nome;
+    const field=(label,val)=>val?`<div class="detail-long"><div class="detail-label">${label}</div><div class="detail-value">${val}</div></div>`:'';
+    document.getElementById('modalBody').innerHTML=`
+      <div class="detail-row">
+        <div class="detail-item"><div class="detail-label">E-mail</div><div class="detail-value">${c.email}</div></div>
+        <div class="detail-item"><div class="detail-label">WhatsApp</div><div class="detail-value">${c.telefone}</div></div>
+        <div class="detail-item"><div class="detail-label">Idade</div><div class="detail-value">${c.idade||'—'}</div></div>
+        <div class="detail-item"><div class="detail-label">Data</div><div class="detail-value">${c.data}</div></div>
       </div>
-      <div class="cand-actions">
-        <button class="btn-sm" onclick="viewCand(${c.id})">Ver detalhes</button>
-        <button class="btn-sm" onclick="downloadCand(${c.id})">⬇ Baixar</button>
-        <button class="btn-sm danger" onclick="deleteCand(${c.id})">🗑 Excluir</button>
+      <div class="detail-row">
+        <div class="detail-item"><div class="detail-label">Vaga</div><div class="detail-value"><span class="badge badge-blue">${c.vaga}</span></div></div>
+        <div class="detail-item"><div class="detail-label">Experiência</div><div class="detail-value">${c.experiencia||'—'}</div></div>
+        <div class="detail-item"><div class="detail-label">Disponibilidade</div><div class="detail-value">${c.disponibilidade||'—'}</div></div>
+        <div class="detail-item"><div class="detail-label">Currículo</div><div class="detail-value">${c.curriculo||'Não anexado'}</div></div>
       </div>
-    </div>
-  `).join('');
-}
+      ${field('DISC',c.disc)}${field('Relação com animais',c.animais)}${field('Carreira',c.carreira)}
+      ${field('Sobre mim',c.sobre)}${field('Pontos fortes',c.pontos_fortes)}${field('Área de crescimento',c.crescimento)}
+      ${field('O que te motiva',c.motivacao)}${field('Por que a Bicho?',c.motivo_bicho)}${field('Sob pressão',c.pressao)}
+      ${c.q1?'<div class="detail-label" style="margin:.75rem 0 .4rem">PERGUNTAS POR COMPETÊNCIA</div>':''}
+      ${field('1. Comunicação',c.q1)}${field('2. Trabalho em equipe',c.q2)}${field('3. Foco no cliente',c.q3)}
+      ${field('4. Proatividade',c.q4)}${field('5. Adaptabilidade',c.q5)}${field('6. Gestão de conflitos',c.q6)}
+      ${field('7. Aprendizado contínuo',c.q7)}${field('8. Resiliência',c.q8)}
+    `;
+    document.getElementById('modalWhats').onclick=()=>
+      window.open(`https://wa.me/55${c.telefone.replace(/\D/g,'')}?text=Ol%C3%A1+${encodeURIComponent(c.nome.split(' ')[0])}%2C+tudo+bem%3F+Aqui+%C3%A9+o+RH+da+Bicho+de+Estima%C3%A7%C3%A3o!`,'_blank');
+    document.getElementById('modalDelete').onclick=()=>{
+      if(confirm(`Excluir candidatura de ${c.nome}?`)){
+        const nova=getCandidaturas().filter(x=>x.id!==id);
+        localStorage.setItem('candidaturas_bicho',JSON.stringify(nova));
+        closeModal(); renderAdmin();
+      }
+    };
+    document.getElementById('modalOverlay').classList.add('open');
+  }
 
-function viewCand(id) {
-  const c = DB.get().find(x => x.id === id);
-  document.getElementById('modalTitle').textContent = c.name;
-  const rows = [
-    ['Vaga', c.position], ['Experiência', c.exp], ['Disponibilidade', c.avail],
-    ['Idade', c.age + ' anos'], ['E-mail', c.email], ['WhatsApp', c.phone],
-    ['Data', c.date + ' às ' + c.time], ['Relação com animais', c.animals],
-    ['Perfil DISC', c.disc || '—'], ['Plano de carreira', c.career],
-    ['Comunicação', c.com], ['Trabalho em equipe', c.team],
-    ['Foco no cliente', c.client], ['Proatividade', c.init],
-    ['Adaptabilidade', c.adapt], ['Gestão de conflitos', c.conf],
-    ['Aprendizado', c.learn], ['Resiliência', c.resil],
-    ['Motivação', c.motiv], ['Por que a Bicho', c.why],
-    ['Sob pressão', c.press], ['Sobre você', c.about],
-    ['Pontos fortes', c.strong], ['Área de crescimento', c.grow],
-    ['Arquivo currículo', c.file || '—']
-  ];
-  document.getElementById('modalBody').innerHTML = rows.map(([k,v]) =>
-    `<div class="detail-row"><strong>${k}</strong>${v}</div>`
-  ).join('');
-  document.getElementById('modal').classList.add('show');
-}
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+  }
 
-function closeModal() {
-  document.getElementById('modal').classList.remove('show');
-}
+  function exportarCSV() {
+    const lista=getCandidaturas();
+    if(!lista.length){alert('Nenhum candidato para exportar.');return;}
+    const cols=['id','data','nome','email','telefone','idade','vaga','experiencia','disponibilidade',
+                'disc','animais','carreira','sobre','pontos_fortes','crescimento','motivacao',
+                'motivo_bicho','pressao','q1','q2','q3','q4','q5','q6','q7','q8','curriculo'];
+    const csv=[cols.join(';')]
+      .concat(lista.map(c=>cols.map(k=>`"${(c[k]||'').toString().replace(/"/g,'""')}"`).join(';')))
+      .join('\n');
+    const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;
+    a.download=`candidatos_bicho_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();URL.revokeObjectURL(url);
+  }
 
-function deleteCand(id) {
-  if (!confirm('Excluir este candidato?')) return;
-  DB.remove(id);
-  loadAdmin();
-}
-
-function downloadCand(id) {
-  const c = DB.get().find(x => x.id === id);
-  const txt = `CANDIDATURA - BICHO DE ESTIMAÇÃO
-======================================
-Nome: ${c.name}
-E-mail: ${c.email}
-WhatsApp: ${c.phone}
-Idade: ${c.age} anos
-Data: ${c.date} às ${c.time}
-
-VAGA E DISPONIBILIDADE
-Vaga: ${c.position}
-Experiência: ${c.exp}
-Disponibilidade: ${c.avail}
-Relação com animais: ${c.animals}
-Plano de carreira: ${c.career}
-Perfil DISC: ${c.disc || '—'}
-Arquivo currículo: ${c.file || '—'}
-
-COMPETÊNCIAS
-1. Comunicação: ${c.com}
-2. Trabalho em equipe: ${c.team}
-3. Foco no cliente: ${c.client}
-4. Proatividade: ${c.init}
-5. Adaptabilidade: ${c.adapt}
-6. Gestão de conflitos: ${c.conf}
-7. Aprendizado contínuo: ${c.learn}
-8. Resiliência: ${c.resil}
-
-MOTIVAÇÃO E CARREIRA
-Motivação: ${c.motiv}
-Por que a Bicho: ${c.why}
-Sob pressão: ${c.press}
-
-SOBRE O CANDIDATO
-Quem é você: ${c.about}
-Pontos fortes: ${c.strong}
-Área de crescimento: ${c.grow}
-======================================`;
-  const a = document.createElement('a');
-  a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txt);
-  a.download = c.name.replace(/\s+/g,'_') + '_candidatura.txt';
-  a.click();
-}
-
-window.onclick = e => { if (e.target === document.getElementById('modal')) closeModal(); };
+  function limparTodos() {
+    const lista=getCandidaturas();
+    if(!lista.length){alert('Nenhum candidato cadastrado.');return;}
+    if(confirm(`Excluir TODOS os ${lista.length} candidatos? Essa ação não pode ser desfeita.`)){
+      localStorage.removeItem('candidaturas_bicho');
+      renderAdmin();
+    }
+  }
 </script>
-
 </body>
 </html>
+
+
+
+
+
+
+
+
+  
+  
+ 
+
+
+
+
+
+  
